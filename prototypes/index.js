@@ -14,33 +14,70 @@ const { weapons, characters } = require('./datasets/ultima');
 const { dinosaurs, humans, movies } = require('./datasets/dinosaurs');
 
 
-
 // SINGLE DATASETS
 // =================================================================
 
 // DATASET: kitties from ./datasets/kitties
-const kittyPrompts = {
-  orangePetNames() {
+   
     // Return an array of just the names of kitties who are orange e.g.
         // ['Tiger', 'Snickers']
 
-        /* CODE GOES HERE */
+    //  pseudo: I want to filter out and bring back only
+    // the kitties who are orange. (filter).
+    // - this will return an array of 2 cat objects.
+    // - I then want just the 2 cat names, in an array.
+    // - to get name so map
+    // function orangePetNames(kitties) {
+      const kittyPrompts = {
+        orangePetNames(animalData) {
+      // const orangeKitties = kittyData.filter((kitty) => {
+      //   return kitty.color === 'orange';
+      // });
 
+      // console.log(orangeKitties);
+      // const orangeKittyNames = orangeKitties.map((kitty) => {
+      //   return kitty.name;
+      // });
+
+      // console.log(orangeKittyNames)
+      // return orangeKittyNames;
+      const orangeKitties = []
+      animalData.forEach((animal) => {
+        if (animal.color === 'orange') {
+          orangeKitties.push(animal.name)
+        };
+      });
+      // console.log(orangeKitties)
+      return orangeKitties
+    },
+    
+       
+    
     // Annotation:
-    // Write your annotation here as a comment
+    // the answer was two names in an array. I had to find, or filter
+    // out the kittens to just the ones that were orange and then 
+    // return just their names in an array. I started with a filter that
+    // brought back two kitten objects and then a map to get their names
+    // since map will give you
+ 
+
+
+     // Sort the kitties by their age
+    // from the test, I can see that this will be from the oldest
+    // to the youngest. so sort?
+   
+  sortByAge(animal) {
+   const animalByAge = animal.sort((a, b) => {
+    return b.age - a.age
+   });
+   return animalByAge
+  //   // Annotation:
+  //   // Write your annotation here as a comment
   },
 
-  sortByAge() {
-    // Sort the kitties by their age
-
-    /* CODE GOES HERE */
-
-    // Annotation:
-    // Write your annotation here as a comment
-  },
-
-  growUp() {
-    // Return an array of kitties who have all grown up by 2 years e.g.
+  //  so need to bring back an array of kitties and add two years to
+  // their age.
+   // Return an array of kitties who have all grown up by 2 years e.g.
     // [{
     //   name: 'Felicia',
     //   age: 4,
@@ -52,10 +89,28 @@ const kittyPrompts = {
     //   color: 'orange'
     // },
     // ...etc]
-
-    /* CODE GOES HERE */
+  growUp(animals) {
+   
+    const animalsGrowUp = []
+    animals.forEach((animal) => {
+      animal.age += 2
+      animalsGrowUp.push(animal)
+      // console.log(animalsGrowUp)
+    });
+   return animalsGrowUp
   }
 };
+
+
+// growUp(animals) {
+//   const animalsGrowUp  = animals.map((animal) => {
+//  animal.age += 2;
+//   return animal
+//   });
+//  return animalsGrowUp
+
+// }
+// }
 
 // PLEASE READ-----------------------
 // Currently, your functions are probably using the `kitties` global import variable.
@@ -69,10 +124,6 @@ const kittyPrompts = {
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
-
-
-
-
 
 
 // DATASET: clubs from ./datasets/clubs
@@ -94,27 +145,18 @@ const clubPrompts = {
   }
 };
 
-
-
-
-
-
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
-
-
-
-
 
 
 // DATASET: mods from ./datasets/mods
-const modPrompts = {
-  studentsPerMod() {
-    // Return an array of objects where the keys are mod (the number of the module)
-    // and studentsPerInstructor (how many students per instructor there are for that mod) e.g.
+ // Return an array of objects where the 
+    // keys are mod (the number of the module)
+    // and studentsPerInstructor 
+    // (how many students per instructor there are for that mod) e.g.
     // [
     //   { mod: 1, studentsPerInstructor: 9 },
     //   { mod: 2, studentsPerInstructor: 11 },
@@ -122,14 +164,58 @@ const modPrompts = {
     //   { mod: 4, studentsPerInstructor: 8 }
     // ]
 
-    /* CODE GOES HERE */
+    // want an array back with obj(hash) first key/value pair does not 
+    // change from original. Second key value pair is new, with 
+    // students being divided by instructors to get studentsPer as key
+    // how many students after division as value.
+    // I have to iterate over the array, access the object properties, create
+    // a new object and have key/values be as stated, push the transformed
+    // object into the new array, and return the results.
+// const modPrompts = {
+//   studentsPerMod() {
+//    let transformedMods = []
+//     mods.forEach((mod) => {
+//     let divide =  mod.students / mod.instructors
+//     let divideStudents = {studentsPerInstructor: divide}
+//     let name = mod.mod
+//     let divideStudentsNew = {mod:name, ... divideStudents}
+//     transformedMods.push(divideStudentsNew)
+//     console.log(transformedMods)
+   
+//   } ); 
+//     return transformedMods
+//     }
+//   };  
 
-    // Annotation:
-    // Write your annotation here as a comment
+  const modPrompts = {
+    studentsPerMod() {
+     let results = mods.map((mod) => {
+        return {
+          mod: mod.mod,
+          studentsPerInstructor: mod.students / mod.instructors
+        }
+      });
+      console.log(results)
+      return results
+    }
   }
-};
 
+  // const modPrompts = {
+  //   studentsPerMod() {
+  //     let result = []
+  //     mods.forEach((mod) => {
+  //       const studentsPerInstructor = mod.students / mod.instructors;
+  //       result.push({
+  //         mod: mod.mod, studentsPerInstructor: studentsPerInstructor
+  //       });
+  //     });
+  //     console.log(result)
+  //     return result;
+  //   }
+  // };
 
+ // Annotation: modPrompts
+    // Write your annotation here as a comment
 
 
 
@@ -139,9 +225,6 @@ const modPrompts = {
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
-
-
-
 
 
 
@@ -229,25 +312,15 @@ const cakePrompts = {
 };
 
 
-
-
-
-
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
-
-
-
-
 
 
 // DATASET: classrooms from ./datasets/classrooms
-const classPrompts = {
-  feClassrooms() {
-    // Create an array of just the front-end classrooms. e.g.
+ // Create an array of just the front-end classrooms. e.g.
     // [
     //   { roomLetter: 'A', program: 'FE', capacity: 32 },
     //   { roomLetter: 'C', program: 'FE', capacity: 27 },
@@ -255,13 +328,32 @@ const classPrompts = {
     //   { roomLetter: 'G', program: 'FE', capacity: 29 }
     // ]
 
-    /* CODE GOES HERE */
+  // go through array classrooms, iterate over classroom obj(hashes) and find or filter
+  // through BE or FE to grab only FE and bring back array of obj(hashes) that 
+  // are only FE.
+
+// const classPrompts = {
+//   feClassrooms() {
+//     let feClassOnly = []
+//     classrooms.forEach((classroomObj) => {
+//       if (classroomObj.program === 'FE')
+//         feClassOnly.push(classroomObj)
+//     });
+//     return feClassOnly
+//   },
+
+  const classPrompts = {
+    feClassrooms() {
+      return classrooms.filter((classroomObj) => {
+       return classroomObj.program === 'FE'
+      });
+      // return feClassOnly
+    },
 
     // Annotation:
     // Write your annotation here as a comment
-  },
+ 
 
-  totalCapacities() {
     // Create an object where the keys are 'feCapacity' and 'beCapacity',
     // and the values are the total capacity for all classrooms in each program e.g.
     // {
@@ -269,21 +361,55 @@ const classPrompts = {
     //   beCapacity: 96
     // }
 
-    /* CODE GOES HERE */
+    // I have an array of objects(hashes). I want to look at the program key, take the FE or BE,
+    // and add up their capacity, and bring back an obj(hash) with all the FE capacities added together,
+    // and the BE capacities added together.
+    // {feCapacity: classrooms}
 
-    // Annotation:
-    // Write your annotation here as a comment
+  totalCapacities() {
+   const total = classrooms.reduce((acc, classroom) => {
+        if (classroom.program === "FE") {
+         (acc.feCapacity += classroom.capacity);
+        } else if (classroom.program === "BE") {
+          (acc.beCapacity += classroom.capacity);
+        }
+        return acc
+   }, {feCapacity: 0, beCapacity: 0});
+   return total
   },
 
+  // totalCapacities() {
+  //   const total = {feCapacity: 0, beCapacity: 0}
+  //   classrooms.forEach((classroom) => {
+  //        if (classroom.program === "FE") {
+  //        total.feCapacity += classroom.capacity;
+  //        }
+  //        if (classroom.program === "BE") {
+  //          total.beCapacity += classroom.capacity;
+  //        }
+  //       });
+  //       return total;
+  //     },
+  // Annotation:
+  // don't forget return statement,
+  // needed to make obj with the keys first and 0 to be able
+  // to add and then the obj(hash) name.key name so total.feCapacity
+  // otherwise could not add. 
+
+
+
+  // Return the array of classrooms sorted by their capacity (least capacity to greatest)
+  // prob use .sort() since we want to take classrooms and 'sort' by capacity. Not
+  // changing anything else in the array.
   sortByCapacity() {
-    // Return the array of classrooms sorted by their capacity (least capacity to greatest)
-
-    /* CODE GOES HERE */
-
-    // Annotation:
-    // Write your annotation here as a comment
+    const sortedClassrooms = classrooms.sort((a, b) => {
+      return a.capacity - b.capacity
+    });
+    return sortedClassrooms
   }
 };
+// Annotation:
+// Write your annotation here as a comment
 
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
@@ -352,46 +478,100 @@ const bookPrompts = {
 
 // DATASET: weather from './datasets/weather
 
-const weatherPrompts = {
-  getAverageTemps() {
-    // return an array of all the average temperatures. Eg:
+
+  // return an array of all the average temperatures. Eg:
     // [ 40, 40, 44.5, 43.5, 57, 35, 65.5, 62, 14, 46.5 ]
 
-    /* CODE GOES HERE */
+  // I have an array of obj(hash), that has a nested obj(hash) of temps
+  // I need to iterate over the array and through the first obj,
+  // to get to the nested obj of temps. I then need to add temps,
+  // and divide temps to get to average. I need to bring back
+  // an array of temps only, not obj.
+
+const weatherPrompts = {
+  getAverageTemps() {
+    let avgTemps = []
+    weather.forEach((weatherInfo) => {
+    let divide =  (weatherInfo.temperature.high +
+      weatherInfo.temperature.low) / 2
+      avgTemps.push(divide)
+    });
+    return avgTemps
+  },
+  
+  // const weatherPrompts = {
+  //   getAverageTemps() {
+  //    let avgTemps = weather.map((weatherInfo) => {
+  //      return (weatherInfo.temperature.high +
+  //       weatherInfo.temperature.low) / 2
+        
+  //     });
+  //     return avgTemps 
+  //   },
 
     // Annotation:
     // Write your annotation here as a comment
-  },
+  
 
-  findSunnySpots() {
     // Return an array of sentences of the locations that are sunny
     // and mostly sunny. Include the location and weather type. Eg:
     // [ 'Atlanta, Georgia is sunny.',
     // 'New Orleans, Louisiana is sunny.',
     // 'Raleigh, North Carolina is mostly sunny.' ]
 
-    /* CODE GOES HERE */
-
-    // Annotation:
-    // Write your annotation here as a comment
+    // going through the array of weather
+    // looking at weather obj(hash) and checking weather.type
+    // if weather.type === sunny or mostly sunny,
+    // returning #{weather.location} + is + ${weather.type} 
+    //  in an array
+  findSunnySpots() {
+    const sortOfSunny = []
+    weather.forEach((weatherObj) => {
+      if (weatherObj.type === 'sunny' || weatherObj.type === 'mostly sunny'){
+        sortOfSunny.push(`${weatherObj.location} is ${weatherObj.type}.`,)
+        console.log(sortOfSunny)
+      };
+    });
+    return sortOfSunny
   },
+  // Annotation:
+  // don't forget to return after the loop,
+  // the or had to have weatherObj.type on both sides
 
+
+
+  // Return the location with the highest humidity. Eg:
+  // {
+  //   location: 'Portland, Oregon',
+  //   type: 'cloudy',
+  //   humidity: 84,
+  //   temperature: { high: 49, low: 38 }
+  // }
   findHighestHumidity() {
-    // Return the location with the highest humidity. Eg:
-    // {
-    //   location: 'Portland, Oregon',
-    //   type: 'cloudy',
-    //   humidity: 84,
-    //   temperature: { high: 49, low: 38 }
-    // }
-
-    /* CODE GOES HERE */
-
-    // Annotation:
-    // Write your annotation here as a comment
-
+    let highestHumidity = weather[0];
+    weather.forEach((weatherObj) => {
+      if (weatherObj.humidity > highestHumidity.humidity) {
+        highestHumidity = weatherObj
+      };
+    });
+    return highestHumidity
   }
 };
+
+// findHighestHumidity() {
+  
+//  return weather.reduce((acc, weatherObj) => {
+//     if (weatherObj.humidity > acc.humidity) {
+//       return weatherObj;
+//     } else {
+//       return acc;
+//     }
+// }, weather[0]);
+// }
+// }
+
+// Annotation:
+// Write your annotation here as a comment
 
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
@@ -403,58 +583,80 @@ const weatherPrompts = {
 // DATASET: nationalParks from ./datasets/nationalParks
 
 const nationalParksPrompts = {
+  /// Return an object containing the names of which parks I need to visit
+  // and the ones I have already visited eg:
+  // {
+  //   parksToVisit: ["Yellowstone", "Glacier", "Everglades"],
+  //   parksVisited: ["Rocky Mountain", "Acadia", "Zion"]
+  //}
+
+  // need an obj(hash) that has parksToVisit and parkesVistied as keys
+  // values are an array of park names
+  // iterate over the array, looking at visited, if visited is true
+  // parksVisited, if false, parks to visit.
   getParkVisitList() {
-    /// Return an object containing the names of which parks I need to visit
-    // and the ones I have already visited eg:
-    // {
-    //   parksToVisit: ["Yellowstone", "Glacier", "Everglades"],
-    //   parksVisited: ["Rocky Mountain", "Acadia", "Zion"]
-    //}
+    let parksOrdered = {parksToVisit: [], parksVisited: []};
+    nationalParks.forEach((park) => {
+      if (park.visited === true) {
+        parksOrdered.parksVisited.push(park.name) 
+      } else {
+        parksOrdered.parksToVisit.push(park.name)
+      }
+        
+    });
+   return parksOrdered
 
-    /* CODE GOES HERE */
-
-    // Annotation:
-    // Write your annotation here as a comment
   },
+  // Annotation:
+  // Write your annotation here as a comment
+
+  // Return an array of objects where the key is the state and the value is its National Park
+  // eg: [ { Colorado: 'Rocky Mountain' },
+  // { Wyoming: 'Yellowstone' },
+  // { Montana: 'Glacier' },
+  // { Maine: 'Acadia' },
+  // { Utah: 'Zion' },
+  // { Florida: 'Everglades' } ]
+
+  // I want an array that holds obj(hash) where the key is state,
+  // value is park.name
 
   getParkInEachState() {
-    // Return an array of objects where the key is the state and the value is its National Park
-    // eg: [ { Colorado: 'Rocky Mountain' },
-    // { Wyoming: 'Yellowstone' },
-    // { Montana: 'Glacier' },
-    // { Maine: 'Acadia' },
-    // { Utah: 'Zion' },
-    // { Florida: 'Everglades' } ]
-
-
-    /* CODE GOES HERE */
-
-    // Annotation:
-    // Write your annotation here as a comment
+    let parks = nationalParks.map((park) => {
+      return {[park.location]: park.name};
+    });
+   return parks
   },
+  // Annotation:
+  // Write your annotation here as a comment
 
+  // Return an array of all the activities I can do
+  // in a National Park. Make sure to exclude duplicates. eg:
+  // [ 'hiking',
+  //   'shoeshoing',
+  //   'camping',
+  //   'fishing',
+  //   'boating',
+  //   'watching wildlife',
+  //   'cross-country skiing',
+  //   'swimming',
+  //   'bird watching',
+  //   'canyoneering',
+  //   'backpacking',
+  //   'rock climbing' ]
+
+  // need an array of strings back, the strings are the activities
+  // from the national parks. Only need back the activites, no dups
   getParkActivities() {
-    // Return an array of all the activities I can do
-    // in a National Park. Make sure to exclude duplicates. eg:
-    // [ 'hiking',
-    //   'shoeshoing',
-    //   'camping',
-    //   'fishing',
-    //   'boating',
-    //   'watching wildlife',
-    //   'cross-country skiing',
-    //   'swimming',
-    //   'bird watching',
-    //   'canyoneering',
-    //   'backpacking',
-    //   'rock climbing' ]
-
-    /* CODE GOES HERE */
-
-    // Annotation:
-    // Write your annotation here as a comment
+    let activities = nationalParks.flatMap((park) => {
+      return park.activities 
+      
+    })
+    return Array.from(new Set(activities))
   }
 };
+// Annotation:
+// Write your annotation here as a comment
 
 
 
@@ -463,26 +665,30 @@ const nationalParksPrompts = {
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
-
-
-
-
 
 
 // DATASET: breweries from ./datasets/breweries
+
+// Return the total beer count of all beers for every brewery e.g.
+    // 40
+    // array with brewery object, array with beer info [{[]}]
+    // i want to get to the inner array of beers, add them up, 
+    // add up all 5 beer arrays into one number of individual beers
+    // 
 const breweryPrompts = {
   getBeerCount() {
-    // Return the total beer count of all beers for every brewery e.g.
-    // 40
-
-    /* CODE GOES HERE */
+   let totalBeers = 0
+   breweries.forEach((brewery) => {
+    totalBeers += brewery.beers.length
+    //  console.log(totalBeers)
+   });
+   return totalBeers
 
     // Annotation:
     // Write your annotation here as a comment
   },
 
-  getBreweryBeerCount() {
-    // Return an array of objects where each object has the name of a brewery
+   // Return an array of objects where each object has the name of a brewery
     // and the count of the beers that brewery has e.g.
     // [
     //  { name: 'Little Machine Brew', beerCount: 12 },
@@ -490,35 +696,84 @@ const breweryPrompts = {
     // ...etc.
     // ]
 
-    /* CODE GOES HERE */
+    // taking the array, making a new array that has an obj(hash) 
+    // where in the object there name as key, brewery as value and 
+    // beer count is a key with a value of how many beers.
+  getBreweryBeerCount() {
+  
+   let results = []
+    breweries.forEach((brewery) => {
+     const name = brewery.name;
+     const beerCount = brewery.beers.length;
+     const brewerySummary = {name: name, beerCount: beerCount}
+     results.push(brewerySummary);
+    //  console.log(results)
+   });
+   return results
 
-    // Annotation:
+    // return breweries.map((brewery) => {
+     
+    //     return {name: brewery.name, beerCount: brewery.beers.length};
+    // });
+  }, 
+    // Annotation: for getBreweryCount
     // Write your annotation here as a comment
-  },
 
-  getSingleBreweryBeerCount(breweryName) {
-    // Return a number that is the count of beers that the specified
+
+   // Return a number that is the count of beers that the specified
     // brewery has e.g.
     // given 'Ratio Beerworks', return 5
-
-
-    /* CODE GOES HERE */
-
-    // Annotation:
-    // Write your annotation here as a comment
+    // only want back the total number of beers from one brewery
+    // 
+  getSingleBreweryBeerCount(breweryName) {
+    singleBreweryTotal = 0
+   breweries.forEach((brewery) => {
+    if (breweryName === brewery.name) {
+      singleBreweryTotal += brewery.beers.length
+      // console.log(singleBreweryTotal)
+    };
+   });
+   return singleBreweryTotal
   },
+  // Annotation: getSingleBreweryBeerCount
+  // Write your annotation here as a comment
 
+
+  // Return the beer which has the highest ABV of all beers
+  // e.g.
+  // { name: 'Barrel Aged Nature\'s Sweater', type: 'Barley Wine', abv: 10.9, ibu: 40 }
+  // need to go through all beers and find the highest ABV and return the beer object(hash)
   findHighestAbvBeer() {
-    // Return the beer which has the highest ABV of all beers
-    // e.g.
-    // { name: 'Barrel Aged Nature\'s Sweater', type: 'Barley Wine', abv: 10.9, ibu: 40 }
+    let highestABVBeer = breweries[0].beers[0]; // Initialize with the first beer of the first brewery
 
-    /* CODE GOES HERE */
-
-    // Annotation:
-    // Write your annotation here as a comment
+    breweries.forEach(brewery => {
+      brewery.beers.forEach(beer => {
+        if (beer.abv > highestABVBeer.abv) {
+          highestABVBeer = beer;
+        }
+      });
+    });
+  
+    return highestABVBeer;
   }
 };
+  // function findHighestAbvBeer() {
+  //   return breweries.reduce((highestABVBeer, brewery) => {
+  //     return brewery.beers.reduce((acc, beer) => {
+  //       if (beer.abv > acc.abv) {
+  //         return beer;
+  //       }
+  //       return acc;
+  //     }, highestABVBeer);
+  //   }, breweries[0].beers[0]); // Initialize with the first beer from the first brewery
+  // }
+   // Annotation:
+    // this one you have to go through the outerlayer,
+    // then the inner layer to get to the abv. Then you have to 
+    // start wiht the first beer so you have a starting value to 
+    // then compare the abv to find the highest and then return that
+    // as the object and not just the abv number.
+ 
 
 
 // ---------------------------------------------------------------------------
@@ -529,29 +784,35 @@ const breweryPrompts = {
 
 // DATASET: weather from './datasets/boardGames
 
+// Return an array of just the names of the games within a specified type. 
+// e.g. given an argument of "strategy", return
+// ["Chess", "Catan", "Checkers", "Pandemic", "Battle Ship", "Azul", "Ticket to Ride"]
+
+// need an array of board game names that meets the arg passed in
+// I have a hash, with an array of types of games, then obj(hash)in the 
+// type array.
 const boardGamePrompts = {
   listGames(type) {
-    // Return an array of just the names of the games within a specified type. 
-    // e.g. given an argument of "strategy", return
-    // ["Chess", "Catan", "Checkers", "Pandemic", "Battle Ship", "Azul", "Ticket to Ride"]
-
-    /* CODE GOES HERE */
-
-    // Annotation:
-    // Write your annotation here as a comment
+      return boardGames[type].map((game) => {
+       return game.name 
+      });
   },
+
+  // Annotation:
+  // Write your annotation here as a comment
+
+  // Return an array of just the names of the games within a specified 
+  // type, sorted alphabetically. 
+  // e.g. given an argument of "childrens", return
+  // ["Candy Land", "Connect Four", "Operation", "Trouble"]
 
   listGamesAlphabetically(type) {
-    // Return an array of just the names of the games within a specified 
-    // type, sorted alphabetically. 
-    // e.g. given an argument of "childrens", return
-    // ["Candy Land", "Connect Four", "Operation", "Trouble"]
-
-    /* CODE GOES HERE */
-
-    // Annotation:
-    // Write your annotation here as a comment
+    
+    
+  
   },
+  // Annotation:
+  // Write your annotation here as a comment
 
   findHighestRatedGamesByType(type) {
     // Return an object which is the highest rated game within the specified type.

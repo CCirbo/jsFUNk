@@ -139,16 +139,16 @@ You will then check that your solution is correct by running the corresponding t
 If you'd like to keep track of your progress, feel free to use the checklist below. Change the `[ ]` to `[x]` in order to check off each item.
 
 #### Single Data Sets
-- [ ] kitties
-- [ ] puppers
+- [x ] kitties
+- [ x] puppers
 - [ ] club
-- [ ] mods
+- [ x] mods
 - [ ] cakes
-- [ ] classrooms
+- [x ] classrooms
 - [ ] books
-- [ ] weather
-- [ ] nationalParks
-- [ ] breweries
+- [ x] weather
+- [ x] nationalParks
+- [ x] breweries
 - [ ] boardGames
 
 ### Double Data Sets
